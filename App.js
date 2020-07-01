@@ -1,7 +1,7 @@
 import "react-native-gesture-handler";
 import React from "react";
 import { Text, View, Button, Image, StyleSheet } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useLinkProps } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { render } from "react-dom";
 
@@ -35,6 +35,25 @@ const navEntries = ["Hund", "Katt", "Kanin"];
 //     </View>
 //   );
 // };
+
+// props: color, order, name
+const TextButton = (props) => {
+  return (
+    <Text
+      style={[
+        styles.button,
+        {
+          backgroundColor: props.color,
+          fontWeight: props.active == props.order ? "bold" : "normal",
+          color: props.active == props.order ? "white" : "black",
+        },
+      ]}
+      onPress={() => props.arg.navigate(props.name)}
+    >
+      {props.name}
+    </Text>
+  );
+};
 
 const styles = StyleSheet.create({
   button: {
@@ -94,6 +113,13 @@ const NavBar = (props) => {
       >
         Kanin
       </Text>
+      <TextButton
+        color="lightyellow"
+        active={props.active}
+        order="4"
+        name="Ekorre"
+        arg={props.arg}
+      />
     </View>
   );
 };
@@ -164,6 +190,23 @@ const screenRabbit = ({ navigation }) => {
   );
 };
 
+const screenSquirrel = ({ navigation }) => {
+  return (
+    <View style={{ flex: 1 }}>
+      <NavBar arg={navigation} active="4" />
+      <View
+        style={{
+          flex: 1,
+          //height: 500,
+          backgroundColor: "lightyellow",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      ></View>
+    </View>
+  );
+};
+
 const App = () => {
   return (
     <NavigationContainer>
@@ -171,6 +214,7 @@ const App = () => {
         <Stack.Screen name="Hund" component={screenDog} />
         <Stack.Screen name="Katt" component={screenCat} />
         <Stack.Screen name="Kanin" component={screenRabbit} />
+        <Stack.Screen name="Ekorre" component={screenSquirrel} />
       </Stack.Navigator>
     </NavigationContainer>
   );
