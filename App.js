@@ -6,35 +6,25 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { render } from "react-dom";
 
 const Stack = createStackNavigator();
-const navEntries = ["Hund", "Katt", "Kanin"];
+const Entries = [
+  { name: "Hund", color: "white" }, // pink
+  { name: "Katt", color: "white" }, // lightblue
+  { name: "Kanin", color: "white" }, // palegreen
+  { name: "Ekorre", color: "white" }, // lightyellow
+  { name: "Bi", color: "white" }, // white
+];
 
-// const NavBar = (props) => {
-//   return (
-//     <View
-//       style={{
-//         flexDirection: "row",
-//         justifyContent: "space-between",
-//         backgroundColor: props.bg,
-//       }}
-//     >
-//       <Button
-//         title="Hund"
-//         color="pink"
-//         onPress={() => props.arg.navigate("Hund")}
-//       />
-//       <Button
-//         title="Katt"
-//         color="lightblue"
-//         onPress={() => props.arg.navigate("Katt")}
-//       />
-//       <Button
-//         title="Kanin"
-//         color="lightgreen"
-//         onPress={() => props.arg.navigate("Kanin")}
-//       />
-//     </View>
-//   );
-// };
+const Images = [
+  require("./assets/app_img/dog.jpg"),
+  require("./assets/app_img/cat.jpg"),
+  require("./assets/app_img/bunny.jpg"),
+  require("./assets/app_img/squirrel.jpg"),
+  require("./assets/app_img/bee.png"),
+];
+
+const TextButtons = [];
+const Screens = [];
+const Stacks = [];
 
 // props: color, order, name
 const TextButton = (props) => {
@@ -45,7 +35,8 @@ const TextButton = (props) => {
         {
           backgroundColor: props.color,
           fontWeight: props.active == props.order ? "bold" : "normal",
-          color: props.active == props.order ? "white" : "black",
+          color: props.active == props.order ? "black" : "black",
+          borderBottomWidth: props.active == props.order ? 0 : 1,
         },
       ]}
       onPress={() => props.arg.navigate(props.name)}
@@ -63,10 +54,26 @@ const styles = StyleSheet.create({
     borderLeftWidth: 1,
     borderColor: "#888",
     flex: 1,
+    fontFamily: "sans-serif-thin",
   },
 });
 
 const NavBar = (props) => {
+  TextButtons.length = 0;
+
+  for (const [index, entry] of Entries.entries()) {
+    TextButtons.push(
+      <TextButton
+        color={entry.color}
+        active={props.active}
+        order={index + 1}
+        name={entry.name}
+        arg={props.arg}
+        key={index}
+      />
+    );
+  }
+
   return (
     <View
       style={{
@@ -74,148 +81,39 @@ const NavBar = (props) => {
         justifyContent: "space-between",
       }}
     >
-      <Text
-        style={[
-          styles.button,
-          {
-            backgroundColor: "pink",
-            fontWeight: props.active == "1" ? "bold" : "normal",
-            color: props.active == "1" ? "white" : "black",
-          },
-        ]}
-        onPress={() => props.arg.navigate("Hund")}
-      >
-        Hund
-      </Text>
-      <Text
-        style={[
-          styles.button,
-          {
-            backgroundColor: "lightblue",
-            fontWeight: props.active == "2" ? "bold" : "normal",
-            color: props.active == "2" ? "white" : "black",
-          },
-        ]}
-        onPress={() => props.arg.navigate("Katt")}
-      >
-        Katt
-      </Text>
-      <Text
-        style={[
-          styles.button,
-          {
-            backgroundColor: "palegreen",
-            fontWeight: props.active == "3" ? "bold" : "normal",
-            color: props.active == "3" ? "white" : "black",
-          },
-        ]}
-        onPress={() => props.arg.navigate("Kanin")}
-      >
-        Kanin
-      </Text>
-      <TextButton
-        color="lightyellow"
-        active={props.active}
-        order="4"
-        name="Ekorre"
-        arg={props.arg}
-      />
+      {TextButtons}
     </View>
   );
 };
 
-const screenDog = ({ navigation }) => {
-  return (
-    <View style={{ flex: 1 }}>
-      <NavBar arg={navigation} active="1" />
-      <View
-        style={{
-          flex: 1,
-          //height: 500,
-          backgroundColor: "pink",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Image
-          source={require("./assets/app_img/dog.jpg")}
-          style={{ height: 300, width: 300 }}
-        />
+for (const [index, entry] of Entries.entries()) {
+  Screens.push(({ navigation }) => {
+    return (
+      <View style={{ flex: 1 }}>
+        <NavBar arg={navigation} active={index + 1} />
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: entry.color,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Image source={Images[index]} style={{ height: 300, width: 300 }} />
+        </View>
       </View>
-    </View>
-  );
-};
+    );
+  });
 
-const screenCat = ({ navigation }) => {
-  return (
-    <View style={{ flex: 1 }}>
-      <NavBar arg={navigation} active="2" />
-      <View
-        style={{
-          flex: 1,
-          //height: 500,
-          backgroundColor: "lightblue",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Image
-          source={require("./assets/app_img/cat.jpg")}
-          style={{ height: 300, width: 300 }}
-        />
-      </View>
-    </View>
+  Stacks.push(
+    <Stack.Screen name={entry.name} component={Screens[index]} key={index} />
   );
-};
-
-const screenRabbit = ({ navigation }) => {
-  return (
-    <View style={{ flex: 1 }}>
-      <NavBar arg={navigation} active="3" />
-      <View
-        style={{
-          flex: 1,
-          //height: 500,
-          backgroundColor: "palegreen",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Image
-          source={require("./assets/app_img/bunny.jpg")}
-          style={{ height: 300, width: 300 }}
-        />
-      </View>
-    </View>
-  );
-};
-
-const screenSquirrel = ({ navigation }) => {
-  return (
-    <View style={{ flex: 1 }}>
-      <NavBar arg={navigation} active="4" />
-      <View
-        style={{
-          flex: 1,
-          //height: 500,
-          backgroundColor: "lightyellow",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      ></View>
-    </View>
-  );
-};
+}
 
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Hund" component={screenDog} />
-        <Stack.Screen name="Katt" component={screenCat} />
-        <Stack.Screen name="Kanin" component={screenRabbit} />
-        <Stack.Screen name="Ekorre" component={screenSquirrel} />
-      </Stack.Navigator>
+      <Stack.Navigator>{Stacks}</Stack.Navigator>
     </NavigationContainer>
   );
 };
