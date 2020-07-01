@@ -53,23 +53,43 @@ const NavBar = (props) => {
       style={{
         flexDirection: "row",
         justifyContent: "space-between",
-        backgroundColor: props.bg,
       }}
     >
       <Text
-        style={[styles.button, { backgroundColor: "pink" }]}
+        style={[
+          styles.button,
+          {
+            backgroundColor: "pink",
+            fontWeight: props.active == "1" ? "bold" : "normal",
+            color: props.active == "1" ? "white" : "black",
+          },
+        ]}
         onPress={() => props.arg.navigate("Hund")}
       >
         Hund
       </Text>
       <Text
-        style={[styles.button, { backgroundColor: "lightblue" }]}
+        style={[
+          styles.button,
+          {
+            backgroundColor: "lightblue",
+            fontWeight: props.active == "2" ? "bold" : "normal",
+            color: props.active == "2" ? "white" : "black",
+          },
+        ]}
         onPress={() => props.arg.navigate("Katt")}
       >
         Katt
       </Text>
       <Text
-        style={[styles.button, { backgroundColor: "palegreen" }]}
+        style={[
+          styles.button,
+          {
+            backgroundColor: "palegreen",
+            fontWeight: props.active == "3" ? "bold" : "normal",
+            color: props.active == "3" ? "white" : "black",
+          },
+        ]}
         onPress={() => props.arg.navigate("Kanin")}
       >
         Kanin
@@ -81,7 +101,7 @@ const NavBar = (props) => {
 const screenDog = ({ navigation }) => {
   return (
     <View style={{ flex: 1 }}>
-      <NavBar arg={navigation} bg="#eee" />
+      <NavBar arg={navigation} active="1" />
       <View
         style={{
           flex: 1,
@@ -103,7 +123,7 @@ const screenDog = ({ navigation }) => {
 const screenCat = ({ navigation }) => {
   return (
     <View style={{ flex: 1 }}>
-      <NavBar arg={navigation} bg="#eee" />
+      <NavBar arg={navigation} active="2" />
       <View
         style={{
           flex: 1,
@@ -125,7 +145,7 @@ const screenCat = ({ navigation }) => {
 const screenRabbit = ({ navigation }) => {
   return (
     <View style={{ flex: 1 }}>
-      <NavBar arg={navigation} bg="#eee" />
+      <NavBar arg={navigation} active="3" />
       <View
         style={{
           flex: 1,
