@@ -74,45 +74,27 @@ const NavBar = (props) => {
         justifyContent: "space-between",
       }}
     >
-      <Text
-        style={[
-          styles.button,
-          {
-            backgroundColor: "pink",
-            fontWeight: props.active == "1" ? "bold" : "normal",
-            color: props.active == "1" ? "white" : "black",
-          },
-        ]}
-        onPress={() => props.arg.navigate("Hund")}
-      >
-        Hund
-      </Text>
-      <Text
-        style={[
-          styles.button,
-          {
-            backgroundColor: "lightblue",
-            fontWeight: props.active == "2" ? "bold" : "normal",
-            color: props.active == "2" ? "white" : "black",
-          },
-        ]}
-        onPress={() => props.arg.navigate("Katt")}
-      >
-        Katt
-      </Text>
-      <Text
-        style={[
-          styles.button,
-          {
-            backgroundColor: "palegreen",
-            fontWeight: props.active == "3" ? "bold" : "normal",
-            color: props.active == "3" ? "white" : "black",
-          },
-        ]}
-        onPress={() => props.arg.navigate("Kanin")}
-      >
-        Kanin
-      </Text>
+      <TextButton
+        color="pink"
+        active={props.active}
+        order="1"
+        name="Hund"
+        arg={props.arg}
+      />
+      <TextButton
+        color="lightblue"
+        active={props.active}
+        order="2"
+        name="Katt"
+        arg={props.arg}
+      />
+      <TextButton
+        color="palegreen"
+        active={props.active}
+        order="3"
+        name="Kanin"
+        arg={props.arg}
+      />
       <TextButton
         color="lightyellow"
         active={props.active}
