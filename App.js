@@ -7,11 +7,11 @@ import { render } from "react-dom";
 
 const Stack = createStackNavigator();
 const Entries = [
-  { name: "Hund", color: "pink" },
-  { name: "Katt", color: "lightblue" },
-  { name: "Kanin", color: "palegreen" },
-  { name: "Ekorre", color: "lightyellow" },
-  { name: "Bi", color: "white" },
+  { name: "Hund", color: "white" }, // pink
+  { name: "Katt", color: "white" }, // lightblue
+  { name: "Kanin", color: "white" }, // palegreen
+  { name: "Ekorre", color: "white" }, // lightyellow
+  { name: "Bi", color: "white" }, // white
 ];
 
 const Images = [
@@ -35,7 +35,8 @@ const TextButton = (props) => {
         {
           backgroundColor: props.color,
           fontWeight: props.active == props.order ? "bold" : "normal",
-          color: props.active == props.order ? "white" : "black",
+          color: props.active == props.order ? "black" : "black",
+          borderBottomWidth: props.active == props.order ? 0 : 1,
         },
       ]}
       onPress={() => props.arg.navigate(props.name)}
@@ -53,6 +54,7 @@ const styles = StyleSheet.create({
     borderLeftWidth: 1,
     borderColor: "#888",
     flex: 1,
+    fontFamily: "sans-serif-thin",
   },
 });
 
