@@ -37,6 +37,7 @@ const TextButton = (props) => {
           fontWeight: props.active == props.order ? "bold" : "normal",
           color: props.active == props.order ? "black" : "black",
           borderBottomWidth: props.active == props.order ? 0 : 1,
+          borderRightWidth: props.order == TextButtons.length ? 0 : 1,
         },
       ]}
       onPress={() => props.arg.navigate(props.name)}
@@ -50,8 +51,8 @@ const styles = StyleSheet.create({
   button: {
     textAlign: "center",
     borderBottomWidth: 1,
-    borderRightWidth: 1,
-    borderLeftWidth: 1,
+    //borderRightWidth: 1,
+    //borderLeftWidth: 1,
     borderColor: "#888",
     flex: 1,
     fontFamily: "sans-serif-thin",
