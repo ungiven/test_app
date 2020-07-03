@@ -10,8 +10,9 @@ const Entries = [
   { name: "Hund", color: "white" }, // pink
   { name: "Katt", color: "white" }, // lightblue
   { name: "Kanin", color: "white" }, // palegreen
-  { name: "Ekorre", color: "white" }, // lightyellow
-  { name: "Bi", color: "white" }, // white
+  //{ name: "Ekorre", color: "white" }, // lightyellow
+  //{ name: "Bi", color: "white" }, // white
+  //{ name: "Gris", color: "white" },
 ];
 
 const Images = [
@@ -20,6 +21,7 @@ const Images = [
   require("./assets/app_img/bunny.jpg"),
   require("./assets/app_img/squirrel.jpg"),
   require("./assets/app_img/bee.png"),
+  require("./assets/app_img/pig.jpg"),
 ];
 
 const TextButtons = [];
@@ -34,10 +36,11 @@ const TextButton = (props) => {
         styles.button,
         {
           backgroundColor: props.color,
-          fontWeight: props.active == props.order ? "bold" : "normal",
-          color: props.active == props.order ? "black" : "black",
-          borderBottomWidth: props.active == props.order ? 0 : 1,
-          borderRightWidth: props.order == TextButtons.length ? 0 : 1,
+          fontWeight: props.active == props.order ? "bold" : "bold",
+          color: props.active == props.order ? "black" : "#888",
+          borderBottomWidth: props.active == props.order ? 3 : 1,
+          borderBottomColor: props.active == props.order ? "palegreen" : "#888",
+          //borderRightWidth: props.order == TextButtons.length ? 0 : 1,
         },
       ]}
       onPress={() => props.arg.navigate(props.name)}
@@ -49,7 +52,9 @@ const TextButton = (props) => {
 
 const styles = StyleSheet.create({
   button: {
+    height: 40,
     textAlign: "center",
+    textAlignVertical: "center",
     borderBottomWidth: 1,
     //borderRightWidth: 1,
     //borderLeftWidth: 1,
@@ -90,7 +95,7 @@ const NavBar = (props) => {
 for (const [index, entry] of Entries.entries()) {
   Screens.push(({ navigation }) => {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, paddingTop: 20 }}>
         <NavBar arg={navigation} active={index + 1} />
         <View
           style={{
@@ -107,7 +112,12 @@ for (const [index, entry] of Entries.entries()) {
   });
 
   Stacks.push(
-    <Stack.Screen name={entry.name} component={Screens[index]} key={index} />
+    <Stack.Screen
+      options={{ animationEnabled: false, headerShown: false }}
+      name={entry.name}
+      component={Screens[index]}
+      key={index}
+    />
   );
 }
 
